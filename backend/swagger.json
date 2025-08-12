@@ -5,7 +5,7 @@
     "description": "Esta API permite gestionar el inventario de ropa que mostrar y el panel administrativo",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "https://ecommerce-escaparate.onrender.com:10000",
   "basePath": "/",
   "schemes": [
     "http"
