@@ -1,11 +1,17 @@
 const express = require('express');
-const app = express();
+const cors = require('cors'); // 👈 importar cors
 const { testConnection } = require('./config/pg');
 const colorRoutes = require('./routes/colorRoutes');
 const materialRoutes = require('./routes/materialRoutes');
 const productoRoutes = require('./routes/productoRoutes');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocumentation = require('./swagger.json');
+
+const app = express();
+
+// Middlewares
+app.use(cors());
+// app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(express.json());
 
