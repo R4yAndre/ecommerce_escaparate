@@ -1,5 +1,6 @@
-const express = require('express');
+const express = require('express'); 
 const router = express.Router();
+const verificarToken = require('../middlewares/authMiddleware');
 const {
   crearMaterial,
   obtenerMateriales,
@@ -8,10 +9,13 @@ const {
   eliminarMaterial,
 } = require('../controllers/materialController');
 
-router.post('/', crearMaterial);
-router.get('/', obtenerMateriales);
-router.get('/:id', obtenerMaterialPorId);
-router.put('/:id', actualizarMaterial);
-router.delete('/:id', eliminarMaterial);
+// Rutas públicas
+router.get('/', obtenerMateriales);         // Listar materiales
+router.get('/:id', obtenerMaterialPorId);   // Obtener material por ID
+
+// Rutas protegidas
+router.post('/', verificarToken, crearMaterial);           // Crear material
+router.put('/:id', verificarToken, actualizarMaterial);    // Actualizar material
+router.delete('/:id', verificarToken, eliminarMaterial);   // Eliminar material
 
 module.exports = router;

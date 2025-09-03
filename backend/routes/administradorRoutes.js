@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const verificarToken = require('../middlewares/authMiddleware');
 const { crearAdministrador } = require('../controllers/administradorController');
 
-router.post('/', crearAdministrador);  // Crear administrador
+// Proteger la creación de administradores
+router.post('/', verificarToken, crearAdministrador);
 
 module.exports = router;

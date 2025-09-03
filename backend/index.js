@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors'); // 👈 importar cors
+const cors = require('cors');
 const { testConnection } = require('./config/pg');
 const colorRoutes = require('./routes/colorRoutes');
 const materialRoutes = require('./routes/materialRoutes');

@@ -7,13 +7,44 @@
   },
   "host": "ecommerce-escaparate.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Token JWT con formato: Bearer {token}"
+    }
+  },
   "paths": {
+    "/api/auth/login": {
+      "post": {
+        "description": "Autenticación de administrador. Devuelve un token JWT",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": { "type": "string", "example": "juan@example.com" },
+                "password": { "type": "string", "example": "123456" }
+              },
+              "required": ["email", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Login exitoso, devuelve token" },
+          "401": { "description": "Credenciales inválidas" }
+        }
+      }
+    },
     "/api/colores/": {
       "post": {
-        "description": "",
+        "description": "Crear un color",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
           {
             "name": "body",
@@ -21,235 +52,105 @@
             "schema": {
               "type": "object",
               "properties": {
-                "nombre": {
-                  "example": "any"
-                }
+                "nombre": { "example": "Rojo" }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" }
         }
       },
       "get": {
-        "description": "",
+        "description": "Listar colores",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/api/colores/{id}": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "description": "Obtener color por ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" }
         }
       },
       "put": {
-        "description": "",
+        "description": "Actualizar color",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
+          { "name": "id", "in": "path", "required": true, "type": "string" },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
-              "properties": {
-                "nombre": {
-                  "example": "any"
-                }
-              }
+              "properties": { "nombre": { "example": "Verde" } }
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
+        "responses": { "200": { "description": "OK" } }
       },
       "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "description": "Eliminar color",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/api/materiales/": {
       "post": {
-        "description": "",
+        "description": "Crear un material",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
-              "properties": {
-                "nombre": {
-                  "example": "any"
-                }
-              }
+              "properties": { "nombre": { "example": "Algodón" } }
             }
           }
         ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
+        "responses": { "201": { "description": "Created" } }
       },
       "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "description": "Listar materiales",
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/api/materiales/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
       "put": {
-        "description": "",
+        "description": "Actualizar material",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
+          { "name": "id", "in": "path", "required": true, "type": "string" },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
-              "properties": {
-                "nombre": {
-                  "example": "any"
-                }
-              }
+              "properties": { "nombre": { "example": "Seda" } }
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
+        "responses": { "200": { "description": "OK" } }
       },
       "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "description": "Eliminar material",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/api/productos/": {
       "post": {
         "description": "Crear un nuevo producto",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
           {
             "name": "body",
@@ -258,135 +159,60 @@
             "schema": {
               "type": "object",
               "properties": {
-                "nombre": { "type": "string", "maxLength": 150 },
+                "nombre": { "type": "string" },
                 "id_categoria": { "type": "integer" },
                 "id_material": { "type": "integer" },
                 "id_color": { "type": "integer" },
                 "descripcion": { "type": "string" },
-                "precio": { "type": "number", "format": "float" },
+                "precio": { "type": "number" },
                 "url_imagen": { "type": "string" }
               },
               "required": ["nombre"]
             }
           }
         ],
-        "responses": {
-          "201": { "description": "Created" },
-          "400": { "description": "Bad Request" }
-        }
+        "responses": { "201": { "description": "Created" } }
       },
       "get": {
         "description": "Obtener todos los productos",
-        "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
-        }
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/api/productos/{id}": {
-      "get": {
-        "description": "Obtener un producto por su ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not Found" },
-          "500": { "description": "Internal Server Error" }
-        }
-      },
       "put": {
-        "description": "Actualizar un producto completamente",
+        "description": "Actualizar producto",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
+          { "name": "id", "in": "path", "required": true, "type": "integer" },
           {
             "name": "body",
             "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "nombre": { "type": "string", "maxLength": 150 },
-                "id_categoria": { "type": "integer" },
-                "id_material": { "type": "integer" },
-                "id_color": { "type": "integer" },
-                "descripcion": { "type": "string" },
-                "precio": { "type": "number", "format": "float" },
-                "url_imagen": { "type": "string" }
-              },
-              "required": ["nombre"]
-            }
+            "schema": { "type": "object", "properties": { "nombre": { "example": "Camisa azul" } } }
           }
-        ],
-        "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Bad Request" },
-          "404": { "description": "Not Found" }
-        }
+        ]
       },
       "patch": {
         "description": "Actualizar parcialmente un producto",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          },
+          { "name": "id", "in": "path", "required": true, "type": "integer" },
           {
             "name": "body",
             "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "nombre": { "type": "string", "maxLength": 150 },
-                "id_categoria": { "type": "integer" },
-                "id_material": { "type": "integer" },
-                "id_color": { "type": "integer" },
-                "descripcion": { "type": "string" },
-                "precio": { "type": "number", "format": "float" },
-                "url_imagen": { "type": "string" }
-              }
-            }
+            "schema": { "type": "object", "properties": { "precio": { "example": 39.99 } } }
           }
-        ],
-        "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Bad Request" },
-          "404": { "description": "Not Found" }
-        }
+        ]
       },
       "delete": {
-        "description": "Eliminar un producto por su ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not Found" },
-          "500": { "description": "Internal Server Error" }
-        }
+        "description": "Eliminar producto",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "integer" }]
       }
     },
     "/api/administradores/": {
       "post": {
-        "description": "Crear un nuevo administrador",
+        "description": "Crear un nuevo administrador (requiere autenticación previa)",
+        "security": [{ "BearerAuth": [] }],
         "parameters": [
           {
             "name": "body",
@@ -395,18 +221,15 @@
             "schema": {
               "type": "object",
               "properties": {
-                "nombre": { "type": "string", "example": "Juan Pérez" },
-                "email": { "type": "string", "example": "juan@example.com" },
-                "password": { "type": "string", "example": "123456" }
+                "nombre": { "type": "string" },
+                "email": { "type": "string" },
+                "password": { "type": "string" }
               },
               "required": ["nombre", "email", "password"]
             }
           }
         ],
-        "responses": {
-          "201": { "description": "Created" },
-          "400": { "description": "Bad Request" }
-        }
+        "responses": { "201": { "description": "Created" } }
       }
     }
   }

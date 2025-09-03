@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const verificarToken = require('../middlewares/authMiddleware');
 const {
   crearColor,
   obtenerColores,
@@ -8,10 +9,13 @@ const {
   eliminarColor,
 } = require('../controllers/colorController');
 
-router.post('/', crearColor);           // Crear color
+// Rutas públicas
 router.get('/', obtenerColores);        // Listar colores
 router.get('/:id', obtenerColorPorId);  // Obtener color por ID
-router.put('/:id', actualizarColor);    // Actualizar color
-router.delete('/:id', eliminarColor);   // Eliminar color
+
+// Rutas protegidas (requieren token)
+router.post('/', verificarToken, crearColor);           // Crear color
+router.put('/:id', verificarToken, actualizarColor);    // Actualizar color
+router.delete('/:id', verificarToken, eliminarColor);   // Eliminar color
 
 module.exports = router;
