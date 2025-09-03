@@ -5,6 +5,7 @@ const colorRoutes = require('./routes/colorRoutes');
 const materialRoutes = require('./routes/materialRoutes');
 const productoRoutes = require('./routes/productoRoutes');
 const administradorRoutes = require('./routes/administradorRoutes');
+const authRoutes = require('./routes/authRoutes');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocumentation = require('./swagger.json');
 
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation));
+app.use('/api/auth', authRoutes); 
 app.use('/api/colores', colorRoutes);
 app.use('/api/materiales', materialRoutes);
 app.use('/api/productos', productoRoutes);
