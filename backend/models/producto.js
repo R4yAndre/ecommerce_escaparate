@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/pg');
 const Material = require('./material');
 const Color = require('./color');
-// const Categoria = require('./categoria'); // Si tienes el modelo
+// const Categoria = require('./categoria');
 
 const Producto = sequelize.define('producto', {
   id: {

@@ -4,6 +4,7 @@ const { testConnection } = require('./config/pg');
 const colorRoutes = require('./routes/colorRoutes');
 const materialRoutes = require('./routes/materialRoutes');
 const productoRoutes = require('./routes/productoRoutes');
+const administradorRoutes = require('./routes/administradorRoutes');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocumentation = require('./swagger.json');
 
@@ -20,6 +21,7 @@ app.use('/api/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation));
 app.use('/api/colores', colorRoutes);
 app.use('/api/materiales', materialRoutes);
 app.use('/api/productos', productoRoutes);
+app.use('/api/administradores', administradorRoutes);
 
 // Servidor
 const PORT = process.env.PORT || 3000;

@@ -383,6 +383,31 @@
           "500": { "description": "Internal Server Error" }
         }
       }
+    },
+    "/api/administradores/": {
+      "post": {
+        "description": "Crear un nuevo administrador",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nombre": { "type": "string", "example": "Juan Pérez" },
+                "email": { "type": "string", "example": "juan@example.com" },
+                "password": { "type": "string", "example": "123456" }
+              },
+              "required": ["nombre", "email", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" }
+        }
+      }
     }
   }
 }
